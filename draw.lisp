@@ -60,8 +60,8 @@
   "Draws the polygons from POLYGONS to *SCREEN*."
   (do-step (index (m-last-col polygons) 3)
     (let ((normal (normal polygons index)))
-      (when (plusp (svref normal 2))
-        (draw-polygon-index polygons index (calculate-color (coerce normal 'list)))))))
+      (when (plusp (nth 2 normal))
+        (draw-polygon-index polygons index (calculate-color normal))))))
 
 (defun scanline (x0 y0 z0 x1 y1 z1 x2 y2 z2 color)
   "Does scanline conversion."
