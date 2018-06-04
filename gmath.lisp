@@ -64,6 +64,7 @@
       (specular (mapcar #'* light-color sreflect)))
   (defun calculate-color (normal)
     "Calculates the color given the NORMAL surface. Normalizes NORMAL."
+    (declare (optimize (speed 3)))
     (normalize normal)
     (let* ((cos-theta (dot normal light))
            (expt-factor (expt (max 0 (loop for x in view

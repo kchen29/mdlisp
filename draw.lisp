@@ -58,7 +58,9 @@
 
 (defun draw-polygons (polygons)
   "Draws the polygons from POLYGONS to *SCREEN*."
-  (do-step (index (m-last-col polygons) 3)
+  (declare (optimize (speed 3)))
+  (do-step (index (the fixnum (m-last-col polygons)) 3)
+    (declare (fixnum index))
     (let ((normal (normal polygons index)))
       (when (plusp (nth 2 normal))
         (draw-polygon-index polygons index (calculate-color normal))))))
