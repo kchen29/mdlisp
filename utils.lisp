@@ -176,9 +176,15 @@
 
 ;;array
 (defun copy-array (array)
-  "Copies an array."
-  (let ((dims (array-dimensions array)))
-    (adjust-array (make-array dims :displaced-to array) dims)))
+  "Copies ARRAY, its dimensions, adjustable, and element-type."
+  (let* ((dims (array-dimensions array))
+         (adjust (adjustable-array-p array))
+         (type (array-element-type array))
+         (new (make-array dims :adjustable adjust :element-type type)))
+    (dotimes (i (array-total-size array))
+      (setf (row-major-aref new i)
+            (row-major-aref array i)))
+    new))
 
 ;;symbols
 (defun concat-symbol (&rest args)

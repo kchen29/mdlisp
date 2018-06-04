@@ -14,7 +14,7 @@
     (setf (mref edges 0 last-col) x
           (mref edges 1 last-col) y
           (mref edges 2 last-col) z
-          (mref edges 3 last-col) 1)
+          (mref edges 3 last-col) 1d0)
     (incf last-col)))
 
 ;;;curves
