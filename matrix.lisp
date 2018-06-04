@@ -64,25 +64,20 @@
   "Defuns make-transform given TRANSFORM-NAME, using ARGS and BODY.
    Requires docstring as part of BODY.
    Also defuns transform, applying make-transform to another matrix."
-  (let ((make-symbol (concat-symbol "MAKE-" transform-name)))
-    `(progn
-       (defun ,make-symbol ,args
-         ,(concatenate 'string "Makes a matrix that " (pop body))
-         (let ((transform (make-transform-matrix)))
-           ,@body
-           transform))
-       (defun ,transform-name (matrix ,@args)
-         ,(concat-string "Applies make-" transform-name " to MATRIX.")
-         (matrix-multiply (,make-symbol ,@args) matrix)))))
+  `(defun ,transform-name ,args
+     ,(pop body)
+     (let ((transform (make-transform-matrix)))
+       ,@body
+       transform)))
 
-(deftransform translate (delx dely delz)
-  "translates by DELX, DELY, and DELZ."
+(deftransform make-translate (delx dely delz)
+  "Makes a matrix that translates by DELX, DELY, and DELZ."
   (setf (mref transform 0 3) (float delx 1d0)
         (mref transform 1 3) (float dely 1d0)
         (mref transform 2 3) (float delz 1d0)))
 
-(deftransform scale (x-scale y-scale z-scale)
-  "scales x by X-SCALE, y by Y-SCALE, and z by Z-SCALE."
+(deftransform make-scale (x-scale y-scale z-scale)
+  "Makes a matrix that scales x by X-SCALE, y by Y-SCALE, and z by Z-SCALE."
   (setf (mref transform 0 0) (float x-scale 1d0)
         (mref transform 1 1) (float y-scale 1d0)
         (mref transform 2 2) (float z-scale 1d0)))
@@ -90,8 +85,8 @@
 (defmacro defrotation (rotate-axis axis-0 axis-1)
   "Defines a rotation around ROTATE-AXIS. AXIS-0 and AXIS-1 mark the value of the axes,
    where x corresponds to 0, y 1, and z 2. Rotates from AXIS-0 to AXIS-1."
-  `(deftransform ,(concat-symbol "ROTATE-" rotate-axis) (degrees)
-     ,(concat-string "rotates by DEGREES counter-clockwise using "
+  `(deftransform ,(concat-symbol "MAKE-ROTATE-" rotate-axis) (degrees)
+     ,(concat-string "Makes a matrix that rotates by DEGREES counter-clockwise using "
                      rotate-axis " as the axis.")
      (let ((radians (/ (* degrees pi) 180)))
        (setf (mref transform ,axis-0 ,axis-0) (cos radians)
@@ -110,7 +105,3 @@
     (y (make-rotate-y degrees))
     (z (make-rotate-z degrees))
     (otherwise (format t "Unknown axis: ~a~%" axis))))
-
-(defun rotate (matrix axis degrees)
-  "Rotate MATRIX by the rotation matrix with AXIS by DEGREES."
-  (matrix-multiply (make-rotate axis degrees) matrix))

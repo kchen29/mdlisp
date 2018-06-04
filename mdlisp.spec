@@ -5,8 +5,6 @@ Importantly, the programmer should be able to define macros and if need be, func
 Additionally, since MDLISP is really just lisp, the programmer is able to use the SLIME + EMACS combination to code.
 
 Differences from MDL:
-All the commands are wrapped in MDLISP-SCRIPT. It provides the setup for running the script.
-
 Each command becomes wrapped in parentheses. Commands are used for their side effects.
 
 push becomes push-stack

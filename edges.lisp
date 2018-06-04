@@ -11,9 +11,9 @@
   (with-args (cols last-col) (matrix edges)
     (when (= last-col cols)
       (adjust-matrix edges 4 (* 2 cols)))
-    (setf (mref edges 0 last-col) x
-          (mref edges 1 last-col) y
-          (mref edges 2 last-col) z
+    (setf (mref edges 0 last-col) (float x 1d0)
+          (mref edges 1 last-col) (float y 1d0)
+          (mref edges 2 last-col) (float z 1d0)
           (mref edges 3 last-col) 1d0)
     (incf last-col)))
 
