@@ -14,7 +14,7 @@ The "optional" tokens for commands become keyword arguments.
 
 Frames, basename, and vary are deprecated.
 
-To make animations, a macro ANIMATION is provided. It provides the setup for creating animations.
+To make animations, a macro ANIMATE is provided. It provides the setup for creating animations.
 It takes the basename, frames, vary definitions, and animation code.
 
 

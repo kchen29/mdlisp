@@ -19,6 +19,9 @@
 (defun update-stack (transform)
   (push (matrix-multiply (pop stack) transform) stack))
 
+(defun clear-stack ()
+  (setf stack (list (make-transform-matrix))))
+
 ;;commands
 (defun push-stack ()
   (push (copy-matrix (car stack)) stack))
@@ -64,3 +67,19 @@
 (defun line (x0 y0 z0 x1 y1 z1)
   (add-edge edges x0 y0 z0 x1 y1 z1)
   (post-add-edges))
+
+;;;animation
+(defmacro animate (basename frames varys &body body)
+  "Animate macro. Given BASENAME, FRAMES, VARYS, and BODY, create an animation.
+   Each vary in VARYS is a list of a symbol name followed by its value for each frame.
+   The current frame is available to use in VARYS and BODY."
+  (let ((frames-digs (gensym)))
+    `(let ((,frames-digs (integer-digits (1- ,frames))))
+       (dotimes (frame ,frames)
+         (let ,varys
+           (format t "Frame ~a~%" frame)
+           (clear-stack)
+           (clear-screen)
+           ,@body
+           (save-frame ,basename frame ,frames-digs)))
+       (make-animation ,basename))))

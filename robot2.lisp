@@ -37,4 +37,4 @@
     (rotate y 20)
     (box -50 0 40 50 120 80)))
 (display)
-(save robot.png)
+(save "robot.png")
