@@ -8,7 +8,7 @@
 
 (defun add-point (edges x y z)
   "Adds a point (x y z) to EDGES."
-  (with-args (cols last-col) (matrix edges)
+  (with-args ((matrix edges) cols last-col) 
     (when (= last-col cols)
       (adjust-matrix edges 4 (* 2 cols)))
     (setf (mref edges 0 last-col) x
