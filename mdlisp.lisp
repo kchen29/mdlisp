@@ -83,3 +83,10 @@
            ,@body
            (save-frame ,basename frame ,frames-digs)))
        (make-animation ,basename))))
+
+(defmacro vary (&rest forms)
+  "Convencience macro to write piece-wise linear varys."
+  `(cond
+     ,@(loop for (s e i l) in forms
+             collect `((<= ,s frame ,e)
+                       (+ ,i (* (- ,l ,i) (/ (- frame ,s) (- ,e ,s))))))))
