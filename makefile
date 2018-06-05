@@ -1,5 +1,5 @@
 sbcl := sbcl --noinform --non-interactive --load "load.lisp" --load
-script := robot.lisp
+script := cat.lisp
 
 all:
 	$(sbcl) "$(script)"
