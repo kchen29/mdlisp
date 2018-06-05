@@ -2,9 +2,9 @@
 
 (defconstant +screen-side+ 500)
 (defparameter *screen* (make-array '(500 500) :initial-element '(0 0 0)))
-(defparameter *z-buffer* (make-array '(500 500) :initial-element most-negative-double-float :element-type 'double-float))
+(defparameter *z-buffer* (make-array '(500 500) :initial-element most-negative-single-float :element-type 'single-float))
 (declaim (type (simple-array list (500 500)) *screen*)
-         (type (simple-array double-float (500 500)) *z-buffer*))
+         (type (simple-array single-float (500 500)) *z-buffer*))
 
 (defconstant +epsilon+ .001)
 
@@ -14,7 +14,7 @@
    COLOR is not copied. Checks the z-value with *z-buffer*."
   (declare (optimize (speed 3) (debug 0) (safety 0))
            (type fixnum x y)
-           (type double-float z))
+           (type single-float z))
   (when (and (< -1 x +screen-side+) (< -1 y +screen-side+)
              (> (- z (aref *z-buffer* x y)) +epsilon+))
     (psetf (aref *screen* x y) color
@@ -39,7 +39,7 @@
   (dotimes (x +screen-side+)
     (dotimes (y +screen-side+)
       (psetf (aref *screen* x y) '(0 0 0)
-             (aref *z-buffer* x y) most-negative-double-float))))
+             (aref *z-buffer* x y) most-negative-single-float))))
 
 (defun save (filename)
   "Saves *SCREEN* to filename.

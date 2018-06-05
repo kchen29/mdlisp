@@ -4,14 +4,14 @@
     ((rows 4)
      (cols 4)
      (last-col 0)
-     (array (make-array (list rows cols) :adjustable t :element-type 'double-float)))
+     (array (make-array (list rows cols) :adjustable t :element-type 'single-float)))
 
   (defun mref (matrix x y)
     "Accesses array of MATRIX at X and Y."
     (aref array x y))
 
   (defun (setf mref) (new-value matrix x y)
-    (setf (aref array x y) (float new-value 1d0)))
+    (setf (aref array x y) (float new-value 0f0)))
 
   (defun copy-matrix (matrix)
     "Copies a matrix."
@@ -32,11 +32,11 @@
     (dotimes (x rows matrix)
       (dotimes (y last-col)
         (if (= x y)
-            (setf (aref array x y) 1d0)
-            (setf (aref array x y) 0d0)))))
+            (setf (aref array x y) 1f0)
+            (setf (aref array x y) 0f0)))))
 
   ;;closure, for fun
-  (let ((temp (make-array 4 :element-type 'double-float)))
+  (let ((temp (make-array 4 :element-type 'single-float)))
     (defun matrix-multiply (matrix m2)
       "A specific matrix multiplication routine. MATRIX is square, 4 by 4
        Multiplies MATRIX with M2. Modifies M2 to hold the result. Returns M2."
@@ -47,21 +47,21 @@
             (last-col2 (m-last-col m2))
             (array2 (m-array m2)))
         (declare (type fixnum rows cols last-col2)
-                 (type (simple-array double-float (4 4)) array)
-                 (type (array double-float (4 *)) array2))
+                 (type (simple-array single-float (4 4)) array)
+                 (type (array single-float (4 *)) array2))
         (dotimes (col last-col2 m2)
           (dotimes (i rows)
             (setf (elt temp i) (aref array2 i col)))
           (dotimes (row rows)
             (setf (aref array2 row col)
-                  (do ((sum 0d0 (+ sum (* (aref array row i) (elt temp i))))
+                  (do ((sum 0f0 (+ sum (* (aref array row i) (elt temp i))))
                        (i 0 (1+ i)))
                       ((>= i cols) sum)
-                    (declare (type double-float sum))))))))))
+                    (declare (type single-float sum))))))))))
 
 ;;;transformations
 (defun make-transform-matrix ()
-  (to-identity (make-matrix :last-col 4 :array (make-array '(4 4) :adjustable nil :element-type 'double-float))))
+  (to-identity (make-matrix :last-col 4 :array (make-array '(4 4) :adjustable nil :element-type 'single-float))))
 
 (defmacro deftransform (transform-name args &body body)
   "Defuns make-transform given TRANSFORM-NAME, using ARGS and BODY.
