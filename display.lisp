@@ -2,16 +2,19 @@
 
 (defconstant +screen-side+ 500)
 (defparameter *screen* (make-array '(500 500) :initial-element '(0 0 0)))
-(defparameter *z-buffer* (make-array '(500 500) :initial-element most-negative-double-float))
+(defparameter *z-buffer* (make-array '(500 500) :initial-element most-negative-double-float :element-type 'double-float))
 (declaim (type (simple-array list (500 500)) *screen*)
-         (type (simple-array real (500 500)) *z-buffer*))
+         (type (simple-array double-float (500 500)) *z-buffer*))
 
 (defconstant +epsilon+ .001)
+
+(declaim (inline plot))
 (defun plot (x y z color)
   "Plots (x, y) on *SCREEN* with COLOR. Checks bounds.
    COLOR is not copied. Checks the z-value with *z-buffer*."
   (declare (optimize (speed 3) (debug 0) (safety 0))
-           (type fixnum x y))
+           (type fixnum x y)
+           (type double-float z))
   (when (and (< -1 x +screen-side+) (< -1 y +screen-side+)
              (> (- z (aref *z-buffer* x y)) +epsilon+))
     (psetf (aref *screen* x y) color

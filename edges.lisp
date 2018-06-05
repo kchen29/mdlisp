@@ -110,49 +110,49 @@
     ;;right
     (add-quad polygons r d b r y b r y z r d z)))
 
-(defun generate-sphere (step x y z r)
-  "Generates a sphere with center (x y z), radius R, points drawn STEP times."
-  (let ((points (make-matrix)))
-    (do-step-max (phi step (* 2 pi))
-      (do-step-max (theta step pi)
-        (add-point points (+ x (* r (cos theta)))
-                   (+ y (* r (sin theta) (cos phi)))
-                   (+ z (* r (sin theta) (sin phi))))))
-    points))
-
 (defun get-index (step rotation circle)
   "Give the index of the point given STEP, ROTATION, and CIRCLE."
   (+ circle (* rotation (1+ step))))
 
-(defun add-sphere (polygons step x y z r)
-  "Adds a sphere to POLYGONS."
-  (let ((points (generate-sphere step x y z r)))
+;;closure, for fun
+(let ((points (make-matrix)))
+  (defun generate-sphere (step x y z r)
+    "Generates a sphere with center (x y z), radius R, points drawn STEP times."
+    (do-step-max (phi step (* 2 pi))
+      (do-step-max (theta step pi)
+        (add-point points (+ x (* r (cos theta)))
+                   (+ y (* r (sin theta) (cos phi)))
+                   (+ z (* r (sin theta) (sin phi)))))))
+
+  (defun add-sphere (polygons step x y z r)
+    "Adds a sphere to POLYGONS."
+    (generate-sphere step x y z r)
     (dotimes (rot step)
       (dotimes (cir (1- step))
         (add-quad-index polygons points
                         (get-index step rot (1+ cir))
                         (get-index step (1+ rot) (+ 2 cir))
                         (get-index step (1+ rot) (1+ cir))
-                        (get-index step rot cir))))))
+                        (get-index step rot cir))))
+    (clear-matrix points))
 
-(defun generate-torus (step x y z r1 r2)
-  "Generates a torus with center (x y z), cross-section circle radius R1,
+  (defun generate-torus (step x y z r1 r2)
+    "Generates a torus with center (x y z), cross-section circle radius R1,
    rotated around with radius R2. Points drawn STEP times."
-  (let ((points (make-matrix)))
     (do-step-max (phi step (* 2 pi))
       (do-step-max (theta step (* 2 pi))
         (add-point points (+ x (* (cos phi) (+ r2 (* r1 (cos theta)))))
                    (+ y (* r1 (sin theta)))
-                   (- z (* (sin phi) (+ r2 (* r1 (cos theta))))))))
-    points))
+                   (- z (* (sin phi) (+ r2 (* r1 (cos theta)))))))))
 
-(defun add-torus (polygons step x y z r1 r2)
-  "Adds a torus to POLYGONS."
-  (let ((points (generate-torus step x y z r1 r2)))
+  (defun add-torus (polygons step x y z r1 r2)
+    "Adds a torus to POLYGONS."
+    (generate-torus step x y z r1 r2)
     (dotimes (rot step)
       (dotimes (cir step)
         (add-quad-index polygons points
                         (get-index step rot cir)
                         (get-index step (1+ rot) cir)
                         (get-index step (1+ rot) (1+ cir))
-                        (get-index step rot (1+ cir)))))))
+                        (get-index step rot (1+ cir)))))
+    (clear-matrix points)))
