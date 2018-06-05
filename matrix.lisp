@@ -6,9 +6,12 @@
      (last-col 0)
      (array (make-array (list rows cols) :adjustable t :element-type 'double-float)))
 
-  (defmacro mref (matrix x y)
+  (defun mref (matrix x y)
     "Accesses array of MATRIX at X and Y."
-    `(aref (m-array ,matrix) ,x ,y))
+    (aref array x y))
+
+  (defun (setf mref) (new-value matrix x y)
+    (setf (aref array x y) (float new-value 1d0)))
 
   (defun copy-matrix (matrix)
     "Copies a matrix."
@@ -72,15 +75,15 @@
 
 (deftransform make-translate (delx dely delz)
   "Makes a matrix that translates by DELX, DELY, and DELZ."
-  (setf (mref transform 0 3) (float delx 1d0)
-        (mref transform 1 3) (float dely 1d0)
-        (mref transform 2 3) (float delz 1d0)))
+  (setf (mref transform 0 3) delx
+        (mref transform 1 3) dely
+        (mref transform 2 3) delz))
 
 (deftransform make-scale (x-scale y-scale z-scale)
   "Makes a matrix that scales x by X-SCALE, y by Y-SCALE, and z by Z-SCALE."
-  (setf (mref transform 0 0) (float x-scale 1d0)
-        (mref transform 1 1) (float y-scale 1d0)
-        (mref transform 2 2) (float z-scale 1d0)))
+  (setf (mref transform 0 0) x-scale
+        (mref transform 1 1) y-scale
+        (mref transform 2 2) z-scale))
 
 (defmacro defrotation (rotate-axis axis-0 axis-1)
   "Defines a rotation around ROTATE-AXIS. AXIS-0 and AXIS-1 mark the value of the axes,
