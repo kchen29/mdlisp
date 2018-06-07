@@ -1,0 +1,22 @@
+(defparameter r 30)
+(defparameter pos-x 250)
+(defparameter pos-y 250)
+(defparameter dx 25)
+(defparameter dy 10)
+
+(defun next-step ()
+  (incf pos-x dx)
+  (incf pos-y dy)
+  (when (> pos-x (- 500 r))
+    (setf dx (- (abs dx))))
+  (when (< pos-x r)
+    (setf dx (abs dx)))
+  (when (> pos-y (- 500 r))
+    (setf dy (- (abs dy))))
+  (when (< pos-y r)
+    (setf dy (abs dy))))
+
+(animate "collide" 60
+    ()
+  (sphere pos-x pos-y 0 r)
+  (next-step))
