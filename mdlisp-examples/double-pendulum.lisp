@@ -2,9 +2,9 @@
 (defparameter g 9.81)
 
 (defparameter m1 10)
-(defparameter m2 10)
-(defparameter l1 110)
-(defparameter l2 110)
+(defparameter m2 5)
+(defparameter l1 150)
+(defparameter l2 80)
 
 (defparameter theta1 (/ pi 2))
 (defparameter theta2 pi)
@@ -36,7 +36,7 @@
     (incf theta1 (* delta omega1))
     (incf theta2 (* delta omega2))))
 
-(animate "double-pendulum" 120
+(animate "double-pendulum" 800
     ()
   (move 250 250 0)
   (let* ((x1 (* l1 (sin theta1)))
@@ -46,6 +46,6 @@
     (line 0 0 0 x1 y1 0)
     (sphere x1 y1 0 30)
     (line x1 y1 0 x2 y2 0)
-    (sphere x2 y2 0 30))
-  (dotimes (i 120)
+    (sphere x2 y2 0 20))
+  (dotimes (i 100)
     (next-step)))
