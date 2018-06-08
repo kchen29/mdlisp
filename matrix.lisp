@@ -36,12 +36,11 @@
             (setf (aref array x y) 0f0)))))
 
   (defun matrix-multiply (matrix m2)
-    "A specific matrix multiplication routine. MATRIX is square, 4 by 4
-       Multiplies MATRIX with M2. Modifies M2 to hold the result. Returns M2."
+    "A specific matrix multiplication routine. MATRIX is square, 4 by 4.
+     Multiplies MATRIX with M2. Modifies M2 to hold the result. Returns M2."
     (declare (optimize (speed 3) (safety 0)))
     (let ((array array)
           (rows rows)
-          (cols cols)
           (last-col2 (m-last-col m2))
           (array2 (m-array m2)))
       (declare (type fixnum rows cols last-col2)
