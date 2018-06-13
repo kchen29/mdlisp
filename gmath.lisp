@@ -45,7 +45,7 @@
 (defparameter ambient-color '(50 50 50))
 (defparameter view '(0 0 1))
 (defparameter light (normalize (list -.5 1 1)))
-(defparameter light-color '(255 0 255))
+(defparameter light-color '(255 100 255))
 (defparameter areflect '(0.2 0.2 0.2))
 (defparameter dreflect '(0.7 0.7 0.7))
 (defparameter sreflect '(0.8 0.8 0.8))

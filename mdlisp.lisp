@@ -1,5 +1,5 @@
 ;;;;Definitions for MDLISP.
-(defparameter step-size 10)
+(defparameter step-size 30)
 
 (defparameter stack (list (make-transform-matrix)))
 (defparameter edges (make-matrix))
