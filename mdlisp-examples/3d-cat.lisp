@@ -12,7 +12,7 @@
    (scale sx sy sz)
    (sphere x y z r)))
 
-(animate "cat" 60
+(animate "3d-cat" 60
     ((body (vary (0 14 0 1)
                  (15 44 1 -1)
                  (45 59 -1 0)))
