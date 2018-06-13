@@ -9,9 +9,9 @@
 
 (defun perspective (matrix)
   (dotimes (i (m-cols matrix))
-    (let ((z (safe (1+ (mref matrix 2 i)))))
-      (setf (mref matrix 0 i) (/ (mref matrix 0 i) z)
-            (mref matrix 1 i) (/ (mref matrix 1 i) z)))))
+    (let ((z (safe (+ 500 (abs (mref matrix 2 i))))))
+      (setf (mref matrix 0 i) (+ 250 (/ (* 500 (- (mref matrix 0 i) 250)) z))
+            (mref matrix 1 i) (+ 250 (/ (* 500 (- (mref matrix 1 i) 250)) z))))))
 
 (defun post-add-edges ()
   (matrix-multiply (car stack) edges)
