@@ -30,10 +30,21 @@ ANIMATIONS:
 simple_anim.lisp is a direct translation of simple_anim.mdl
 cat.lisp is a better way of writing cat.mdl
 
-varys:
+VARYS:
 rolling.lisp is an example of using nonlinear varys.
 projectile.lisp is an example of using vary not only as a knob.
 
-physics simulations:
+PHYSICS SIMULATIONS:
 pendulum.lisp
-n-bodies.lisp
+rope.lisp a pendulum using a rope
+double-pendulum.lisp
+collide.lisp has a ball bounce on the walls
+
+3D ANAGLYPH:
+anaglyph.lisp implements functionality
+anaglyph-test.lisp tests anaglyphs
+3d-cat.lisp has a 3d cat
+
+PERSPECTIVE:
+perspective.lisp implements functionality
+perspective-test.lisp tests perspective
