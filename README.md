@@ -9,3 +9,4 @@ Kenny Chen Period 5
     - simulate physics
     - implement 3d anaglyphs as part of the script
     - implement perspective as part of the script
+- phong shading
