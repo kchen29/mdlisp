@@ -11,7 +11,7 @@
                                (mref polygons x (1+ index)))
             (svref temp2 x) (- (mref polygons x index)
                                (mref polygons x (+ 2 index)))))
-    (cross-product temp1 temp2)))
+    (normalize (cross-product temp1 temp2))))
 
 (defun cross-product (v1 v2)
   "Returns the cross-product of V1 and V2. Fresh list."
@@ -63,9 +63,8 @@
       (diffuse (mapcar #'* light-color dreflect))
       (specular (mapcar #'* light-color sreflect)))
   (defun calculate-color (normal)
-    "Calculates the color given the NORMAL surface. Normalizes NORMAL."
+    "Calculates the color given the NORMAL surface."
     (declare (optimize (speed 3)))
-    (normalize normal)
     (let* ((cos-theta (dot normal light))
            (expt-factor (expt (max 0 (loop for x in view
                                            for y in normal

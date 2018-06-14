@@ -68,6 +68,9 @@
   (add-edge edges x0 y0 z0 x1 y1 z1)
   (post-add-edges))
 
+(defmacro shading (type)
+  `(setf shading ',type))
+
 ;;;animation
 (defmacro animate (basename frames varys &body body)
   "Animate macro. Given BASENAME, FRAMES, VARYS, and BODY, create an animation.

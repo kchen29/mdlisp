@@ -108,7 +108,7 @@
   "Create the vector normal hashtable from POLYGONS."
   (let ((normals (make-hash-table :test 'equal)))
     (do-step (tr (m-last-col polygons) 3)
-      (let ((normal (normalize (normal polygons tr))))
+      (let ((normal (normal polygons tr)))
         (dotimes (i 3)
           (let* ((vector (list (mref polygons 0 (+ tr i))
                                (mref polygons 1 (+ tr i))

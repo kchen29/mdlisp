@@ -6,7 +6,7 @@ Kenny Chen Period 5
   - Quick list of things you can do with mdlisp
     - nonlinear varies
     - varies not only as a knob
-    - simulate physics
+    - implement physics simulations as part of the script
     - implement 3d anaglyphs as part of the script
     - implement perspective as part of the script
 - phong shading

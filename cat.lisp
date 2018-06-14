@@ -7,9 +7,10 @@
   `(temp ,@body))
 (defun ellipsoid (x y z r sx sy sz)
   (temp
-   (scale sx sy sz)
-   (sphere x y z r)))
+    (scale sx sy sz)
+    (sphere x y z r)))
 
+(shading phong)
 (animate "cat" 60
     ((body (vary (0 14 0 1)
                  (15 44 1 -1)
@@ -43,8 +44,8 @@
     (part body2
       (move -95 15 0)
       (temp
-       (rotate z -10)
-       (ellipsoid 0 0 0 62 1.16 .85 1))
+        (rotate z -10)
+        (ellipsoid 0 0 0 62 1.16 .85 1))
       (part left-arm1
         (move -20 30 55)
         (rotate z 30 flr)
